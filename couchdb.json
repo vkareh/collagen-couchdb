@@ -1,0 +1,10 @@
+{
+   "_id": "_design/collagen",
+   "language": "javascript",
+   "views": {
+       "collection": {
+           "map": "function(doc) { emit([doc.type, doc._id], null); }",
+           "reduce": "_count"
+       }
+   }
+}

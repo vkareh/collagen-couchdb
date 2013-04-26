@@ -1,0 +1,19 @@
+{
+    "name": "collagen-couchdb",
+    "description": "CouchDB back-end storage for Collagen.js models.",
+    "version": "0.0.0",
+    "author": {
+        "name": "Victor Kareh",
+        "url": "http://www.vkareh.net"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/vkareh/collagen-couchdb.git"
+    },
+    "main": "./index.js",
+    "dependencies": {
+        "cradle": "0.6.x"
+    },
+    "keywords": ["collagen", "couchdb", "storage"],
+    "license": "MIT"
+}
