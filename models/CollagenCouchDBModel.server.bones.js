@@ -69,12 +69,17 @@ var sync = function(method, model, options) {
 var cradle = require('cradle');
 var register = models.Model.register;
 models.Model.register = function(server) {
-    if (this.prototype.storage === 'couchdb') {
+    if (!this.prototype.couchDb) {
+        // Connect to configured CouchDB instance
         var config = Collagen.config && Collagen.config.couchdb || {};
         var couchDb = new(cradle.Connection)(config.host, config.port, config.options).database(config.name);
 
         // Give model access to the CouchDB object
         this.prototype.couchDb = couchDb;
+    }
+
+    // Use CouchDB as persistent storage for models
+    if (this.prototype.storage === 'couchdb') {
         this.prototype.sync = sync;
     }
     return register.apply(this, arguments);

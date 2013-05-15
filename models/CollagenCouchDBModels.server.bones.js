@@ -25,7 +25,7 @@ var sync = function(method, collection, options) {
 var cradle = require('cradle');
 var register = models.Models.register;
 models.Models.register = function(server) {
-    if (this.prototype.storage === 'couchdb') {
+    if (!this.prototype.couchDb) {
         // Try to reuse CouchDB connection
         if (this.prototype.model && this.prototype.model.prototype.couchDb) {
             this.prototype.couchDb = this.prototype.model.prototype.couchDb;
@@ -33,7 +33,10 @@ models.Models.register = function(server) {
             var config = Collagen.config && Collagen.config.couchdb || {};
             this.prototype.couchDb = new(cradle.Connection)(config.host, config.port, config.options).database(config.name);
         }
+    }
 
+    // Use CouchDB as persistent storage for collections
+    if (this.prototype.storage === 'couchdb') {
         this.prototype.sync = sync;
     }
     return register.apply(this, arguments);
